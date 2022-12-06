@@ -1,0 +1,11 @@
+.container__home {
+  padding: 3rem;
+}
+
+.container__home__card {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid red;
+  background-color: whitesmoke;
+  justify-content: flex-start;
+}

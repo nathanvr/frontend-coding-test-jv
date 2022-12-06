@@ -3,15 +3,15 @@ import Image from "next/image";
 const PeopleDetailCard = ({ people }) => {
   return (
     <>
-      <div className=" card w-25 m-10">
+      <div className="people__card">
         <img
-          className="card-img-top"
+          className="people__card__picture"
           src={people.picture}
           alt={people.nickname}
         />
-        <div className="card-body">
-          <h5 className="card-title">{people.fullName}</h5>
-          <p className="card-text">
+        <div className="people__card__body">
+          <h5 className="people__card__body__title">{people.fullName}</h5>
+          <p className="people__card__body__text">
             {people.age} años. {people.occupation}
           </p>
         </div>

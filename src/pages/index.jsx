@@ -3,10 +3,10 @@ import Link from "next/link";
 function HomePage({ people }) {
   return (
     <>
-      <div className="container">
+      <div className="container__home">
         <h1> Pagina de Inicio</h1>
         <hr />
-        <div className="d-flex flex-column">
+        <div className="container__home__card">
           {people
             .sort((a, b) => a.age - b.age)
             .map((person) => (
