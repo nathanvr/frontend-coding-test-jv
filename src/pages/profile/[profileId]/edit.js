@@ -9,9 +9,6 @@ const Edit = ({ person }) => {
   const [gender, setGender] = useState(person.gender);
   const [picture, setPicture] = useState(person.picture);
 
-  const [imageSrc, setImageSrc] = useState();
-  const [uploadData, setUploadData] = useState();
-
   async function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData();
@@ -127,7 +124,7 @@ const Edit = ({ person }) => {
               <input type="file" name="file" />
             </p>
 
-            <img src={imageSrc} />
+            <img src={picture} />
           </div>
 
           <button type="submit">Submit</button>

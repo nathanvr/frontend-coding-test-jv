@@ -12,7 +12,10 @@ const PersonDetail = ({ person, tasks }) => {
           <Link href={`/profile/${person.id}/edit`}>Editar perfil</Link>
         </div>
         {listTask.map((task) => (
-          <TasksCard task={task} key={task.id}></TasksCard>
+          <div key={task.id}>
+            <TasksCard task={task}></TasksCard>
+            <Link href={`/tasks/${task.id}/edit`}>Modificar Tarea</Link>
+          </div>
         ))}
       </div>
     </>
