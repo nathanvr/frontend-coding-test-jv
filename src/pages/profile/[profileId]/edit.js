@@ -9,6 +9,9 @@ const Edit = ({ person }) => {
   const [gender, setGender] = useState(person.gender);
   const [picture, setPicture] = useState(person.picture);
 
+  const [imageSrc, setImageSrc] = useState();
+  const [uploadData, setUploadData] = useState();
+
   async function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData();
@@ -17,6 +20,28 @@ const Edit = ({ person }) => {
     data.append("occupation", occupation);
     data.append("nickname", nickname);
     data.append("picture", picture);
+
+    const form = event.currentTarget;
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === "file"
+    );
+
+    const formData = new FormData();
+
+    for (const file of fileInput.files) {
+      formData.append("file", file);
+    }
+    formData.append("upload_preset", "datasketch");
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/ddxtma8ag/image/upload`,
+        formData
+      );
+      setPicture(res.secure_url);
+    } catch (error) {
+      console.log(error);
+    }
 
     try {
       const res = await axios.put(
@@ -53,13 +78,21 @@ const Edit = ({ person }) => {
           <div className="form__edit__client__gender">
             <p>Genero</p>
             {/* #TODO poner un select en para que el usuario ponga el genero con el */}
+            <select
+              value={gender}
+              onChange={(event) => {
+                setGender(event.target.value);
+              }}
+            >
+              <option value="Male">Masculino</option>
+              <option value="Female">Femenino</option>
+            </select>
           </div>
           <div className="form__edit__client__age">
             <label>Edad</label>
             <input
               type="number"
               defaultValue={age}
-              // onChange={handleChange}
               onChange={(event) => {
                 setAge(event.currentTarget.value);
               }}
@@ -81,7 +114,6 @@ const Edit = ({ person }) => {
             <input
               type="text"
               defaultValue={nickname}
-              // onChange={handleChange}
               onChange={(event) => {
                 setNickname(event.currentTarget.value);
               }}
@@ -89,14 +121,13 @@ const Edit = ({ person }) => {
           </div>
           <div className="form__edit__client__picture">
             <label>Foto</label>
-            <input
-              type="url"
-              defaultValue={picture}
-              // onChange={handleChange}
-              onChange={(event) => {
-                setPicture(event.currentTarget.value);
-              }}
-            ></input>
+            <input type="url" defaultValue={picture}></input>
+            <p>{picture}</p>
+            <p>
+              <input type="file" name="file" />
+            </p>
+
+            <img src={imageSrc} />
           </div>
 
           <button type="submit">Submit</button>
