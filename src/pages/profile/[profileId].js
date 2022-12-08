@@ -11,7 +11,6 @@ const PersonDetail = ({ person, tasks }) => {
           <Link href={`/profile/${person.id}/edit`}>
             <div className="profile__detail__person__link">Editar perfil</div>
           </Link>
-
           <PersonDetailCard person={person}></PersonDetailCard>
         </div>
         <div className="profile__detail__task">

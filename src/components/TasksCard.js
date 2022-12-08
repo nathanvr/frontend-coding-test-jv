@@ -1,7 +1,27 @@
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const TasksCard = ({ task }) => {
+  const [completed, setCompleted] = useState(false);
+
+  useEffect(() => {
+    setCompleted(task.completed);
+  }, []);
+
+  const handleCheck = async () => {
+    const data = { ...task, completed: !completed };
+
+    try {
+      const res = await axios.put(
+        `http://localhost:3001/tasks/${task.id}`,
+        data
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="task__container">
@@ -14,9 +34,24 @@ const TasksCard = ({ task }) => {
           </Link>
         </div>
         <hr />
+
         <div className="task__container__body">
           <p>{task.description}</p>
-          <input type={"radio"} id="completed"></input>
+
+          <input
+            type="checkbox"
+            id="completed"
+            checked={completed}
+            onClick={handleCheck}
+            onChange={() => {
+              setCompleted(!completed);
+            }}
+          ></input>
+          {completed ? (
+            <label>Marcar como incompleta </label>
+          ) : (
+            <label>Marcar como completa </label>
+          )}
         </div>
       </div>
     </>

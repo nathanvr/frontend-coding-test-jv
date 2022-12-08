@@ -3,23 +3,53 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 const Edit = ({ task }) => {
-  const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
-  const [completed, setCompleted] = useState(task.completed);
-  const [startDate, setStartDate] = useState(task.startDate);
-  const [endDate, setEndDate] = useState(task.endDate);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [completed, setCompleted] = useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [personId, setPersonId] = useState(0);
   const router = useRouter();
 
   const time = Date.now();
   const hoy = new Date(time);
 
   useEffect(() => {
-    if (endDate < hoy.toISOString().slice(0, 10)) {
-      setCompleted("true");
-    } else {
-      setCompleted("false");
+    setTitle(task.title);
+    setDescription(task.description);
+    setCompleted(task.completed);
+    setStartDate(task.startDate);
+    setEndDate(task.endDate);
+    setPersonId(task.personId);
+
+    if (hoy > endDate) {
+      setCompleted(!completed);
+      (async () => {
+        const data = { ...task, completed: !completed };
+        try {
+          const res = await axios.put(
+            `http://localhost:3001/tasks/${task.id}`,
+            data
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      })();
     }
   }, []);
+
+  const handleCheck = async () => {
+    const data = { ...task, completed: !completed };
+
+    try {
+      const res = await axios.put(
+        `http://localhost:3001/tasks/${task.id}`,
+        data
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleClick = () => {
     router.push(`http://localhost:3000/profile/${task.personId}`);
@@ -27,25 +57,16 @@ const Edit = ({ task }) => {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const data = new FormData();
-    data.append("title", title);
-    data.append("description", description);
-    data.append("completed", completed);
-    data.append("startDate", startDate);
-    data.append("endDate", endDate);
-    data.append("personId", task.personId);
 
     try {
-      const res = await axios.put(
-        `http://localhost:3001/tasks/${task.id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(res);
+      const res = await axios.put(`http://localhost:3001/tasks/${task.id}`, {
+        title: title,
+        description: description,
+        completed: completed,
+        startDate: startDate,
+        endDate: endDate,
+        personId: personId,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -53,8 +74,25 @@ const Edit = ({ task }) => {
 
   return (
     <>
+      {completed ? "true" : "false"}
       <div className="container__form__task">
-        <h2>Modificar Tarea</h2>
+        <div>
+          <h2>Modificar Tarea</h2>
+          <input
+            type="checkbox"
+            id="completed"
+            checked={completed}
+            onClick={handleCheck}
+            onChange={() => {
+              setCompleted(!completed);
+            }}
+          ></input>
+          {completed ? (
+            <label>Marcar como incompleta </label>
+          ) : (
+            <label>Marcar como completa </label>
+          )}
+        </div>
 
         <form className="form__edit__task " onSubmit={handleSubmit}>
           <div className="form__edit__task__title form-group">
@@ -80,17 +118,6 @@ const Edit = ({ task }) => {
             ></input>
           </div>
 
-          <div className="form__edit__task__completed form-group">
-            <label>completo</label>
-            <input
-              className="form-control"
-              type="text"
-              defaultValue={completed}
-              onChange={(event) => {
-                setCompleted(event.currentTarget.value);
-              }}
-            ></input>
-          </div>
           <div className="form__edit__task__startDate form-group">
             <label>fecha inicio</label>
             <input
@@ -107,6 +134,7 @@ const Edit = ({ task }) => {
             <input
               className="form-control"
               type="date"
+              min={startDate}
               defaultValue={endDate}
               onChange={(event) => {
                 setEndDate(event.currentTarget.value);
