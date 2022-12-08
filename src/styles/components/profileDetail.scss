@@ -1,0 +1,17 @@
+.container__profile__detail {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 60px 0;
+
+  .profile__detail__person__link {
+    border: 1px solid gray;
+    width: 80px;
+    padding: 0 5px;
+    font-size: 12px;
+  }
+
+  .profile__detail__person__link:hover {
+    color: white;
+    background-color: gray;
+  }
+}

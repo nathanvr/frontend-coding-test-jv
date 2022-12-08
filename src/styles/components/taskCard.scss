@@ -1,0 +1,11 @@
+.task__container__title {
+  display: flex;
+  padding-top: 2.5rem;
+  align-items: center;
+  h5 {
+    margin-right: 8px;
+  }
+  .task__container__title__icon {
+    color: yellow;
+  }
+}

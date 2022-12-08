@@ -1,0 +1,26 @@
+.container__form__client {
+  width: 40rem;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: auto;
+
+  img {
+    width: 250px;
+    border-radius: 50%;
+    margin: auto;
+  }
+
+  .form__edit__client {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      margin: 5px 0px;
+      label {
+        margin: 1px 0px;
+      }
+    }
+  }
+}

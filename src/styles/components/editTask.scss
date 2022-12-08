@@ -1,0 +1,20 @@
+.container__form__task {
+  width: 40rem;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: auto;
+
+  .form__edit__task {
+    display: flex;
+    flex-direction: column;
+
+    div {
+      margin: 5px 0px;
+      label {
+        margin: 1px 0px;
+      }
+    }
+  }
+}

@@ -6,17 +6,21 @@ const PersonDetail = ({ person, tasks }) => {
   const listTask = tasks.filter((task) => task.personId === person.id);
   return (
     <>
-      <div>
-        <div>
+      <div className="container__profile__detail">
+        <div className="profile__detail__person">
+          <Link href={`/profile/${person.id}/edit`}>
+            <div className="profile__detail__person__link">Editar perfil</div>
+          </Link>
+
           <PersonDetailCard person={person}></PersonDetailCard>
-          <Link href={`/profile/${person.id}/edit`}>Editar perfil</Link>
         </div>
-        {listTask.map((task) => (
-          <div key={task.id}>
-            <TasksCard task={task}></TasksCard>
-            <Link href={`/tasks/${task.id}/edit`}>Modificar Tarea</Link>
-          </div>
-        ))}
+        <div className="profile__detail__task">
+          {listTask.map((task) => (
+            <div key={task.id}>
+              <TasksCard task={task}></TasksCard>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
