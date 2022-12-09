@@ -1,0 +1,12 @@
+.navBar {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #0047a3;
+
+  li {
+    padding: 10px;
+    a {
+      color: white;
+    }
+  }
+}

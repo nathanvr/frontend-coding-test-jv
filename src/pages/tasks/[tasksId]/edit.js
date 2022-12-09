@@ -2,17 +2,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import moment from "moment";
+import Head from "next/head";
+import Layout from "../../../components/Layout";
 
 const Edit = ({ task }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [completed, setCompleted] = useState(false);
-  const [startDate, setStartDate] = useState("");
+  const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState("");
   const [personId, setPersonId] = useState(0);
   const router = useRouter();
 
-  const hoy = new Date();
+  const today = moment().format("YYYY-MM-DD");
 
   useEffect(() => {
     setTitle(task.title);
@@ -22,10 +25,9 @@ const Edit = ({ task }) => {
     setEndDate(task.endDate);
     setPersonId(task.personId);
 
-    // if (hoy.toISOString().slice(0, 10) > endDate) {
-    //   setCompleted(!completed);
+    // if (today > endDate) {
     //   (async () => {
-    //     const data = { ...task, completed: completed };
+    //     const data = { ...task, completed: !completed };
     //     try {
     //       const res = await axios.put(
     //         `http://localhost:3001/tasks/${task.id}`,
@@ -112,86 +114,91 @@ const Edit = ({ task }) => {
 
   return (
     <>
-      <div className="container__form__task">
-        <div>
-          <h2>Modificar Tarea</h2>
-          <input
-            type="checkbox"
-            id="completed"
-            checked={completed}
-            onClick={handleCheck}
-            onChange={() => {
-              setCompleted(!completed);
-            }}
-          ></input>
-          {completed ? (
-            <label>Marcar como incompleta </label>
-          ) : (
-            <label>Marcar como completa </label>
-          )}
+      <Head>
+        <title>Editar Tarea</title>
+      </Head>
+      <Layout>
+        <div className="container__form__task">
+          <div>
+            <h2>Modificar Tarea</h2>
+            <input
+              type="checkbox"
+              id="completed"
+              checked={completed}
+              onClick={handleCheck}
+              onChange={() => {
+                setCompleted(!completed);
+              }}
+            ></input>
+            {completed ? (
+              <label>Marcar como incompleta </label>
+            ) : (
+              <label>Marcar como completa </label>
+            )}
+          </div>
+
+          <form className="form__edit__task " onSubmit={handleSubmit}>
+            <div className="form__edit__task__title form-group">
+              <label>Titulo</label>
+              <input
+                className="form-control"
+                type="text"
+                defaultValue={title}
+                onChange={(event) => {
+                  setTitle(event.currentTarget.value);
+                }}
+              ></input>
+            </div>
+            <div className="form__edit__task__description form-group">
+              <label>Descripcion</label>
+              <input
+                className="form-control"
+                type="text"
+                defaultValue={description}
+                onChange={(event) => {
+                  setDescription(event.currentTarget.value);
+                }}
+              ></input>
+            </div>
+
+            <div className="form__edit__task__startDate form-group">
+              <label>fecha inicio</label>
+              <input
+                className="form-control"
+                type="date"
+                defaultValue={startDate}
+                onChange={(event) => {
+                  setStartDate(event.currentTarget.value);
+                }}
+              ></input>
+            </div>
+            <div className="form__edit__task__endDate form-group">
+              <label>fecha fin</label>
+              <input
+                className="form-control"
+                type="date"
+                min={startDate}
+                defaultValue={endDate}
+                onChange={(event) => {
+                  setEndDate(event.currentTarget.value);
+                }}
+              ></input>
+            </div>
+            <div className="form__edit__task__buttons">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={handleClick}
+              >
+                Cancelar y regresar
+              </button>
+              <button className="btn btn-success" type="submit">
+                Actualizar
+              </button>
+            </div>
+          </form>
         </div>
-
-        <form className="form__edit__task " onSubmit={handleSubmit}>
-          <div className="form__edit__task__title form-group">
-            <label>Titulo</label>
-            <input
-              className="form-control"
-              type="text"
-              defaultValue={title}
-              onChange={(event) => {
-                setTitle(event.currentTarget.value);
-              }}
-            ></input>
-          </div>
-          <div className="form__edit__task__description form-group">
-            <label>Descripcion</label>
-            <input
-              className="form-control"
-              type="text"
-              defaultValue={description}
-              onChange={(event) => {
-                setDescription(event.currentTarget.value);
-              }}
-            ></input>
-          </div>
-
-          <div className="form__edit__task__startDate form-group">
-            <label>fecha inicio</label>
-            <input
-              className="form-control"
-              type="date"
-              defaultValue={startDate}
-              onChange={(event) => {
-                setStartDate(event.currentTarget.value);
-              }}
-            ></input>
-          </div>
-          <div className="form__edit__task__endDate form-group">
-            <label>fecha fin</label>
-            <input
-              className="form-control"
-              type="date"
-              min={startDate}
-              defaultValue={endDate}
-              onChange={(event) => {
-                setEndDate(event.currentTarget.value);
-              }}
-            ></input>
-          </div>
-          <div className="form__edit__task__buttons">
-            <button
-              className="btn btn-secondary"
-              type="button"
-              onClick={handleClick}
-            >
-              Cancelar y regresar
-            </button>
-            <button className="btn btn-success" type="submit">
-              Actualizar
-            </button>
-          </div>
-        </form>
-      </div>
+      </Layout>
     </>
   );
 };

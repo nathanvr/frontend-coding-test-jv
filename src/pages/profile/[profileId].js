@@ -2,6 +2,7 @@ import PersonDetailCard from "../../components/PersonDetailCard";
 import TasksCard from "../../components/TasksCard";
 import Link from "next/link";
 import Head from "next/head";
+import Layout from "../../components/Layout";
 
 const PersonDetail = ({ person, tasks }) => {
   const listTask = tasks.filter((task) => task.personId === person.id);
@@ -10,21 +11,23 @@ const PersonDetail = ({ person, tasks }) => {
       <Head>
         <title>Detalle de perfil</title>
       </Head>
-      <div className="container__profile__detail">
-        <div className="profile__detail__person">
-          <Link href={`/profile/${person.id}/edit`}>
-            <div className="profile__detail__person__link">Editar perfil</div>
-          </Link>
-          <PersonDetailCard person={person}></PersonDetailCard>
+      <Layout>
+        <div className="container__profile__detail">
+          <div className="profile__detail__person">
+            <Link href={`/profile/${person.id}/edit`}>
+              <div className="profile__detail__person__link">Editar perfil</div>
+            </Link>
+            <PersonDetailCard person={person}></PersonDetailCard>
+          </div>
+          <div className="profile__detail__task">
+            {listTask.map((task) => (
+              <div key={task.id}>
+                <TasksCard task={task}></TasksCard>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="profile__detail__task">
-          {listTask.map((task) => (
-            <div key={task.id}>
-              <TasksCard task={task}></TasksCard>
-            </div>
-          ))}
-        </div>
-      </div>
+      </Layout>
     </>
   );
 };
