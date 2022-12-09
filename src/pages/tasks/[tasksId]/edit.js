@@ -11,8 +11,7 @@ const Edit = ({ task }) => {
   const [personId, setPersonId] = useState(0);
   const router = useRouter();
 
-  const time = Date.now();
-  const hoy = new Date(time);
+  const hoy = new Date();
 
   useEffect(() => {
     setTitle(task.title);
@@ -22,20 +21,20 @@ const Edit = ({ task }) => {
     setEndDate(task.endDate);
     setPersonId(task.personId);
 
-    if (hoy > endDate) {
-      setCompleted(!completed);
-      (async () => {
-        const data = { ...task, completed: !completed };
-        try {
-          const res = await axios.put(
-            `http://localhost:3001/tasks/${task.id}`,
-            data
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }
+    // if (hoy.toISOString().slice(0, 10) > endDate) {
+    //   setCompleted(!completed);
+    //   (async () => {
+    //     const data = { ...task, completed: completed };
+    //     try {
+    //       const res = await axios.put(
+    //         `http://localhost:3001/tasks/${task.id}`,
+    //         data
+    //       );
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   })();
+    // }
   }, []);
 
   const handleCheck = async () => {
@@ -74,7 +73,6 @@ const Edit = ({ task }) => {
 
   return (
     <>
-      {completed ? "true" : "false"}
       <div className="container__form__task">
         <div>
           <h2>Modificar Tarea</h2>
