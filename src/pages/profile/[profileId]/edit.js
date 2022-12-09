@@ -18,6 +18,24 @@ const Edit = ({ person }) => {
     setPicture(person.picture);
   }, []);
 
+  const handlePicture = async (event) => {
+    const formData = new FormData();
+    const file = event.target.files[0];
+    formData.append("file", file);
+
+    formData.append("upload_preset", "datasketch");
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/ddxtma8ag/image/upload`,
+        formData
+      );
+
+      setPicture(res.data.secure_url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   async function handleSubmit(event) {
     event.preventDefault();
     const data = {
@@ -29,28 +47,28 @@ const Edit = ({ person }) => {
       picture: picture,
     };
 
-    const form = event.currentTarget;
-    const fileInput = Array.from(form.elements).find(
-      ({ name }) => name === "file"
-    );
+    // const form = event.currentTarget;
+    // const fileInput = Array.from(form.elements).find(
+    //   ({ name }) => name === "file"
+    // );
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    for (const file of fileInput.files) {
-      formData.append("file", file);
-    }
-    formData.append("upload_preset", "datasketch");
+    // for (const file of fileInput.files) {
+    //   formData.append("file", file);
+    // }
+    // formData.append("upload_preset", "datasketch");
 
-    try {
-      const res = await axios.post(
-        `https://api.cloudinary.com/v1_1/ddxtma8ag/image/upload`,
-        formData
-      );
-
-      setPicture(res.secure_url);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const res = await axios.post(
+    //     `https://api.cloudinary.com/v1_1/ddxtma8ag/image/upload`,
+    //     formData
+    //   );
+    //   console.log(res.secure_url);
+    //   setPicture(res.data.secure_url);
+    // } catch (error) {
+    //   console.log(error);
+    // }
 
     try {
       const res = await axios.put(
@@ -69,7 +87,12 @@ const Edit = ({ person }) => {
         <img src={picture} alt={fullName} />
         <form className="form__edit__client" onSubmit={handleSubmit}>
           <p>
-            <input className="form-control" type="file" name="file" />
+            <input
+              className="form-control"
+              type="file"
+              name="file"
+              onChange={handlePicture}
+            />
           </p>
           <div className="form-group form__edit__client__fullname">
             <label>Nombre Completo</label>
