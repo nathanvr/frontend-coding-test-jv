@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const TasksCard = ({ task }) => {
   const [completed, setCompleted] = useState(false);
@@ -18,8 +19,27 @@ const TasksCard = ({ task }) => {
         `http://localhost:3001/tasks/${task.id}`,
         data
       );
+      if (res.status === 200) {
+        toast.success("Cambio el estado de la Tarea", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      toast.error("Error al cambiar el estado de la Tarea", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
   return (

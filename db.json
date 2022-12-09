@@ -1,13 +1,13 @@
 {
   "people": [
     {
-      "id": 1,
       "fullName": "John Doe",
-      "age": 32,
+      "age": "37",
       "occupation": "Software Developer",
-      "nickname": "Johnny",
+      "nickname": "Johnnysss",
       "gender": "Male",
-      "picture": "https://randomuser.me/api/portraits/lego/1.jpg"
+      "picture": "https://randomuser.me/api/portraits/lego/1.jpg",
+      "id": 1
     },
     {
       "id": 2,
@@ -19,13 +19,13 @@
       "picture": "https://randomuser.me/api/portraits/lego/2.jpg"
     },
     {
-      "id": 3,
       "fullName": "Bob Johnson",
       "age": 45,
       "occupation": "Teacher",
       "nickname": "Bobby",
-      "gender": "Male",
-      "picture": "https://randomuser.me/api/portraits/lego/3.jpg"
+      "gender": "Female",
+      "picture": "https://res.cloudinary.com/ddxtma8ag/image/upload/v1670554963/datasketch-profile/jxz0q7qfcox32ly5ctu2.jpg",
+      "id": 3
     },
     {
       "id": 4,

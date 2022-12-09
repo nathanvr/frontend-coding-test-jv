@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Edit = ({ person }) => {
   const [fullName, setFullName] = useState("");
@@ -30,10 +31,28 @@ const Edit = ({ person }) => {
         `https://api.cloudinary.com/v1_1/ddxtma8ag/image/upload`,
         formData
       );
-
       setPicture(res.data.secure_url);
+      if (res.status === 200) {
+        toast.success("Imagen cargada correctamente", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      toast.error("Error al cambiar el estado de la Tarea", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
   async function handleSubmit(event) {
@@ -75,8 +94,27 @@ const Edit = ({ person }) => {
         `http://localhost:3001/people/${person.id}`,
         data
       );
+      if (res.status === 200) {
+        toast.success("Perfil actualizado Correctamente", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
-      alert("ha ocurrido un error");
+      toast.error("Error al cambiar el estado de la Tarea", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }
 
@@ -136,7 +174,6 @@ const Edit = ({ person }) => {
               className="form-control"
               type="text"
               defaultValue={occupation}
-              // onChange={handleChange}
               onChange={(event) => {
                 setOccupation(event.currentTarget.value);
               }}
@@ -152,15 +189,6 @@ const Edit = ({ person }) => {
                 setNickname(event.currentTarget.value);
               }}
             ></input>
-          </div>
-          <div className="form-group form__edit__client__picture">
-            <label>Foto</label>
-            <input
-              className="form-control"
-              type="url"
-              defaultValue={picture}
-            ></input>
-            <p>{picture}</p>
           </div>
 
           <button className="btn btn-secondary" type="submit">

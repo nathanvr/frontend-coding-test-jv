@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const Edit = ({ task }) => {
   const [title, setTitle] = useState("");
@@ -45,8 +46,27 @@ const Edit = ({ task }) => {
         `http://localhost:3001/tasks/${task.id}`,
         data
       );
+      if (res.status === 200) {
+        toast.success("Cambio el estado de la Tarea", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      toast.error("Error al cambiar el estado de la Tarea", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -66,8 +86,27 @@ const Edit = ({ task }) => {
         endDate: endDate,
         personId: personId,
       });
+      if (res.status === 200) {
+        toast.success("Actualizado Correctamente", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      toast.error("Error al cambiar el estado de la Tarea", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }
 
