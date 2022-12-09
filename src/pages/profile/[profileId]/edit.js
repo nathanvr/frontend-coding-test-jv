@@ -1,23 +1,33 @@
 import axios from "axios";
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const Edit = ({ person }) => {
-  const [fullName, setFullName] = useState(person.fullName);
-  const [age, setAge] = useState(person.age);
-  const [occupation, setOccupation] = useState(person.occupation);
-  const [nickname, setNickname] = useState(person.nickname);
-  const [gender, setGender] = useState(person.gender);
-  const [picture, setPicture] = useState(person.picture);
+  const [fullName, setFullName] = useState("");
+  const [age, setAge] = useState(0);
+  const [occupation, setOccupation] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [gender, setGender] = useState("");
+  const [picture, setPicture] = useState("");
+
+  useEffect(() => {
+    setFullName(person.fullName);
+    setAge(person.age);
+    setOccupation(person.occupation);
+    setNickname(person.nickname);
+    setGender(person.gender);
+    setPicture(person.picture);
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const data = new FormData();
-    data.append("fullName", fullName);
-    data.append("age", age);
-    data.append("occupation", occupation);
-    data.append("nickname", nickname);
-    data.append("picture", picture);
+    const data = {
+      fullName: fullName,
+      age: age,
+      occupation: occupation,
+      nickname: nickname,
+      gender: gender,
+      picture: picture,
+    };
 
     const form = event.currentTarget;
     const fileInput = Array.from(form.elements).find(
@@ -36,6 +46,7 @@ const Edit = ({ person }) => {
         `https://api.cloudinary.com/v1_1/ddxtma8ag/image/upload`,
         formData
       );
+
       setPicture(res.secure_url);
     } catch (error) {
       console.log(error);
@@ -44,14 +55,8 @@ const Edit = ({ person }) => {
     try {
       const res = await axios.put(
         `http://localhost:3001/people/${person.id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        data
       );
-      console.log(res);
     } catch (error) {
       alert("ha ocurrido un error");
     }
