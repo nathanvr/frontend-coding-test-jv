@@ -1,13 +1,20 @@
 import PeopleDetailCard from "../components/PeopleDetailCard";
 import Link from "next/link";
 import { useState } from "react";
+import Head from "next/head";
+
 function HomePage({ people }) {
   const [order, setOrder] = useState("mitoma");
 
   return (
     <>
+      <Head>
+        <title>Inicio</title>
+      </Head>
       <div className="container__home">
-        <h1> Pagina de Inicio</h1>
+        <h2> Pagina de Inicio</h2>
+
+        <hr />
         <div className="container__home__orderControl">
           <p>Ordenar de </p>
           <select
@@ -19,9 +26,7 @@ function HomePage({ people }) {
             <option value="mitoma">menor a mayor</option>
             <option value="matomi">mayor a menor</option>
           </select>
-          <p>{order}</p>
         </div>
-        <hr />
         <div className="container__home__card">
           {order === "mitoma"
             ? people

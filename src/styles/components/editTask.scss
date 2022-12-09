@@ -1,14 +1,21 @@
 .container__form__task {
   width: 40rem;
-  padding: 5rem;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   margin: auto;
+  border: 1px solid lightgray;
 
   .form__edit__task {
     display: flex;
     flex-direction: column;
+
+    .form__edit__task__buttons {
+      button {
+        margin-right: 3px;
+      }
+    }
 
     div {
       margin: 5px 0px;

@@ -7,13 +7,15 @@
 
 .task__container__title {
   display: flex;
-
   align-items: center;
 
   h5 {
     margin-right: 8px;
   }
-  .task__container__title__icon {
-    color: yellow;
+}
+
+.task__container__body__check {
+  input {
+    margin-right: 3px;
   }
 }

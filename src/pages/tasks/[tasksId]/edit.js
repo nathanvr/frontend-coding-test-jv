@@ -178,7 +178,7 @@ const Edit = ({ task }) => {
               }}
             ></input>
           </div>
-          <div>
+          <div className="form__edit__task__buttons">
             <button
               className="btn btn-secondary"
               type="button"

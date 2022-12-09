@@ -58,20 +58,22 @@ const TasksCard = ({ task }) => {
         <div className="task__container__body">
           <p>{task.description}</p>
 
-          <input
-            type="checkbox"
-            id="completed"
-            checked={completed}
-            onClick={handleCheck}
-            onChange={() => {
-              setCompleted(!completed);
-            }}
-          ></input>
-          {completed ? (
-            <label>Marcar como incompleta </label>
-          ) : (
-            <label>Marcar como completa </label>
-          )}
+          <div className="task__container__body__check">
+            <input
+              type="checkbox"
+              id="completed"
+              checked={completed}
+              onClick={handleCheck}
+              onChange={() => {
+                setCompleted(!completed);
+              }}
+            ></input>
+            {completed ? (
+              <label>Marcar como incompleta </label>
+            ) : (
+              <label>Marcar como completa </label>
+            )}
+          </div>
         </div>
       </div>
     </>

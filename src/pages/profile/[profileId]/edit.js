@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 const Edit = ({ person }) => {
   const [fullName, setFullName] = useState("");
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState();
   const [occupation, setOccupation] = useState("");
   const [nickname, setNickname] = useState("");
   const [gender, setGender] = useState("");
@@ -18,7 +20,11 @@ const Edit = ({ person }) => {
     setGender(person.gender);
     setPicture(person.picture);
   }, []);
+  const router = useRouter();
 
+  const handleClick = () => {
+    router.push(`http://localhost:3000/profile/${person.id}`);
+  };
   const handlePicture = async (event) => {
     const formData = new FormData();
     const file = event.target.files[0];
@@ -90,10 +96,14 @@ const Edit = ({ person }) => {
     // }
 
     try {
-      const res = await axios.put(
-        `http://localhost:3001/people/${person.id}`,
-        data
-      );
+      const res = await axios.put(`http://localhost:3001/people/${person.id}`, {
+        fullName: fullName,
+        age: age,
+        occupation: occupation,
+        nickname: nickname,
+        gender: gender,
+        picture: picture,
+      });
       if (res.status === 200) {
         toast.success("Perfil actualizado Correctamente", {
           position: "top-right",
@@ -120,8 +130,11 @@ const Edit = ({ person }) => {
 
   return (
     <>
+      <Head>
+        <title>Editar Perfil</title>
+      </Head>
       <div className="container__form__client">
-        <h2>Edita Usuario</h2>
+        <h2>Editar Perfil</h2>
         <img src={picture} alt={fullName} />
         <form className="form__edit__client" onSubmit={handleSubmit}>
           <p>
@@ -190,10 +203,19 @@ const Edit = ({ person }) => {
               }}
             ></input>
           </div>
+          <div className="form__edit__client__buttons">
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={handleClick}
+            >
+              Cancelar y regresar
+            </button>
 
-          <button className="btn btn-secondary" type="submit">
-            Submit
-          </button>
+            <button className="btn btn-success" type="submit">
+              Actualizar
+            </button>
+          </div>
         </form>
       </div>
     </>

@@ -1,11 +1,15 @@
 import PersonDetailCard from "../../components/PersonDetailCard";
 import TasksCard from "../../components/TasksCard";
 import Link from "next/link";
+import Head from "next/head";
 
 const PersonDetail = ({ person, tasks }) => {
   const listTask = tasks.filter((task) => task.personId === person.id);
   return (
     <>
+      <Head>
+        <title>Detalle de perfil</title>
+      </Head>
       <div className="container__profile__detail">
         <div className="profile__detail__person">
           <Link href={`/profile/${person.id}/edit`}>

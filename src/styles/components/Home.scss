@@ -1,11 +1,24 @@
 .container__home {
   padding: 3rem;
-}
 
-.container__home__card {
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px solid red;
-  background-color: whitesmoke;
-  justify-content: flex-start;
+  .container__home__orderControl {
+    display: flex;
+    p {
+      margin-right: 5px;
+    }
+
+    select {
+      background-color: white;
+      border: none;
+      padding: 0 3px;
+    }
+    select:hover {
+      cursor: pointer;
+    }
+  }
+  .container__home__card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 }
